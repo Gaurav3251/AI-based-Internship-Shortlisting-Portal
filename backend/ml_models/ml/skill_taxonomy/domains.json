@@ -1,0 +1,57 @@
+{
+  "web_development": {
+    "required": ["frontend", "backend", "full stack", "full stack development", "web", "web development", "html", "css", "javascript"],
+    "bonus": ["react", "angular", "vue", "node", "django", "flask", "fastapi", "rest api", "graphql", "next.js", "bootstrap", "tailwind", "postman", "jwt", "oauth", "authentication", "vercel", "netlify", "render"],
+    "related_domains": ["backend", "mobile_development"]
+  },
+  "data_science": {
+    "required": ["data", "analysis", "machine learning", "statistics", "python", "ml"],
+    "bonus": ["tensorflow", "pytorch", "pandas", "numpy", "sklearn", "deep learning", "nlp", "computer vision", "data cleaning", "feature engineering", "model evaluation", "jupyter", "seaborn", "matplotlib", "power bi", "tableau", "rag", "llms", "agentic ai", "sentiment analysis"],
+    "related_domains": ["ai_ml", "backend"]
+  },
+  "mobile_development": {
+    "required": ["mobile", "android", "ios", "app"],
+    "bonus": ["kotlin", "swift", "flutter", "react native", "android development"],
+    "related_domains": ["web_development"]
+  },
+  "backend": {
+    "required": ["backend", "server", "api", "database"],
+    "bonus": ["java", "python", "node", "spring", "spring boot", "django", "flask", "fastapi", "rest api", "jwt", "oauth", "microservices", "sql", "postgresql", "mysql", "mongodb", "redis", "kafka", "hibernate", "maven"],
+    "related_domains": ["web_development", "cloud_devops"]
+  },
+  "ai_ml": {
+    "required": ["ai", "artificial intelligence", "machine learning", "deep learning", "ml"],
+    "bonus": ["neural network", "nlp", "computer vision", "tensorflow", "pytorch", "opencv", "transformers", "rag", "llms", "agentic ai", "object detection", "classification", "recommendation system", "chatbot"],
+    "related_domains": ["data_science"]
+  },
+  "cloud_devops": {
+    "required": ["cloud", "devops", "aws", "azure", "gcp", "docker", "kubernetes"],
+    "bonus": ["ci/cd", "jenkins", "terraform", "ansible", "linux", "github actions", "gitlab ci", "docker compose", "aws ec2", "aws s3", "azure fundamentals", "google cloud", "oracle cloud", "aws certified cloud practitioner", "aws certified solutions architect", "microsoft azure fundamentals"],
+    "related_domains": ["backend"]
+  },
+  "project_management": {
+    "required": ["project management", "agile", "scrum", "management", "leadership"],
+    "bonus": ["stakeholder management", "teamwork", "planning", "coordination", "sprint management", "jira", "confluence", "project documentation"],
+    "related_domains": []
+  },
+  "data_analytics": {
+    "required": ["data analysis", "reporting", "dashboards", "sql"],
+    "bonus": ["power bi", "tableau", "excel", "data visualization", "kpi", "business intelligence", "google data analytics certificate", "ibm data science professional certificate"],
+    "related_domains": ["data_science"]
+  },
+  "business_analyst": {
+    "required": ["business analysis", "requirements gathering", "process mapping"],
+    "bonus": ["stakeholder management", "user stories", "jira", "confluence", "excel", "power bi", "documentation"],
+    "related_domains": ["project_management", "data_analytics"]
+  },
+  "ui_ux_design": {
+    "required": ["ui", "ux", "user research", "wireframes", "prototyping"],
+    "bonus": ["figma", "adobe xd", "user flows", "design system", "usability testing"],
+    "related_domains": ["web_development"]
+  },
+  "qa_testing": {
+    "required": ["testing", "qa", "test cases", "bug tracking"],
+    "bonus": ["manual testing", "automation testing", "selenium", "postman", "jira"],
+    "related_domains": ["web_development", "backend"]
+  }
+}
