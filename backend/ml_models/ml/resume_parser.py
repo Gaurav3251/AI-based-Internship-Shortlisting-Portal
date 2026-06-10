@@ -8,6 +8,7 @@ import re
 import pdfplumber
 import spacy
 from spacy.matcher import Matcher
+from sentence_transformers import SentenceTransformer
 from typing import Dict, List, Optional
 from datetime import datetime
 from .skill_normalizer import SkillNormalizer
@@ -317,18 +318,48 @@ class ResumeParser:
         return achievements
     
     def _extract_section(self, text: str, section_keywords: str) -> Optional[str]:
-        """Extract specific section from resume (supports inline headers)"""
-        # Capture text after header on same line + following lines until next header
-        pattern = rf'(?:^|\n)\s*({section_keywords})[\s:]*([^\n]*)\n(.*?)(?=\n\s*(?:[A-Z][A-Za-z\s]+:|\Z))'
+        """Extract section text even when resumes use uppercase headers without colons."""
+        if not text:
+            return None
 
-        match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
-        if match:
-            inline = match.group(2).strip()
-            body = match.group(3).strip()
-            combined = "\n".join([s for s in [inline, body] if s])
-            return combined.strip() if combined else None
+        lines = text.splitlines()
+        start_idx = None
+        header_re = re.compile(rf'^\s*(?:{section_keywords})\s*:?\s*$', re.IGNORECASE)
+        inline_re = re.compile(rf'^\s*(?:{section_keywords})\s*:\s*(.+)$', re.IGNORECASE)
+        known_headers_re = re.compile(
+            r'^\s*(education|experience|work experience|internship|projects?|achievements?|'
+            r'certifications?|skills|technical skills|coursework|summary|objective)\s*:?\s*$',
+            re.IGNORECASE
+        )
 
-        return None
+        for idx, line in enumerate(lines):
+            if header_re.match(line):
+                start_idx = idx
+                break
+            inline = inline_re.match(line)
+            if inline:
+                start_idx = idx
+                break
+
+        if start_idx is None:
+            return None
+
+        collected = []
+        first_inline = inline_re.match(lines[start_idx] or "")
+        if first_inline and first_inline.group(1).strip():
+            collected.append(first_inline.group(1).strip())
+
+        for line in lines[start_idx + 1:]:
+            stripped = (line or "").strip()
+            if known_headers_re.match(stripped):
+                break
+            # Also stop on all-caps section headers like "WORK EXPERIENCE"
+            if stripped and stripped == stripped.upper() and len(stripped.split()) <= 5 and len(stripped) >= 4:
+                break
+            collected.append(line)
+
+        section = "\n".join(collected).strip()
+        return section or None
     
     def calculate_domain_scores(self, skills: Dict[str, List[str]]) -> Dict[str, float]:
         """Calculate domain expertise scores based on skills"""
@@ -347,6 +378,48 @@ class ResumeParser:
                 domain_scores[domain] = min(score, 100)  # Cap at 100
         
         return domain_scores
+
+    def calculate_parse_confidence(self, parsed_data: Dict) -> float:
+        """
+        Estimate parser confidence (0-100) from extraction completeness.
+        """
+        score = 0.0
+
+        text_len = len(parsed_data.get('raw_text', '') or '')
+        if text_len > 200:
+            score += 20
+        elif text_len > 100:
+            score += 10
+
+        personal = parsed_data.get('personal_info', {})
+        if personal.get('name'):
+            score += 10
+        if personal.get('email'):
+            score += 10
+        if personal.get('phone'):
+            score += 10
+
+        academic = parsed_data.get('academic', {})
+        if academic.get('cgpa') is not None or academic.get('percentage') is not None:
+            score += 15
+
+        skills = parsed_data.get('skills', {})
+        total_skills = sum(len(v) for v in skills.values()) if isinstance(skills, dict) else 0
+        if total_skills >= 8:
+            score += 20
+        elif total_skills >= 4:
+            score += 12
+        elif total_skills >= 1:
+            score += 6
+
+        if len(parsed_data.get('experience', [])) > 0:
+            score += 5
+        if len(parsed_data.get('projects', [])) > 0:
+            score += 5
+        if len(parsed_data.get('achievements', [])) > 0:
+            score += 5
+
+        return round(min(score, 100.0), 2)
     
     def parse_resume(self, pdf_path: str) -> Dict:
         """
@@ -393,11 +466,12 @@ class ResumeParser:
             parsed_data['domain_scores'] = self.calculate_domain_scores(
                 parsed_data['skills']
             )
-            
+            parsed_data['parse_confidence'] = self.calculate_parse_confidence(parsed_data)
+
             # Add metadata
             parsed_data['metadata'] = {
                 'parsed_at': datetime.now().isoformat(),
-                'parser_version': '1.0'
+                'parser_version': '1.1'
             }
             
             return parsed_data

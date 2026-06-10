@@ -3,7 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from students.views import StudentProfileView, ApplicationListCreateView
-from teachers.views import AnalyticsView, ExportShortlistedCSVView, ShortlistedStudentsView
+from teachers.views import AnalyticsView, ExportShortlistedCSVView, ShortlistedStudentsView, InternshipRankingView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -19,6 +19,7 @@ urlpatterns = [
     path('api/applications/my/', ApplicationListCreateView.as_view(), name='applications-my-alias'),
     path('api/analytics/', AnalyticsView.as_view(), name='analytics-alias'),
     path('api/internships/<int:internship_id>/shortlisted/', ShortlistedStudentsView.as_view(), name='shortlisted-alias'),
+    path('api/internships/<int:internship_id>/ranking/', InternshipRankingView.as_view(), name='ranking-alias'),
     path('api/export/shortlisted/<int:internship_id>/', ExportShortlistedCSVView.as_view(), name='export-shortlisted-alias'),
 ]
 

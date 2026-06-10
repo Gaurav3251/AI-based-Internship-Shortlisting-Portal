@@ -2,6 +2,7 @@
 Student serializers for API
 """
 from rest_framework import serializers
+from django.utils import timezone
 from .models import StudentProfile, Application
 from internships.serializers import InternshipSerializer
 from ml_models.serializers import ShortlistingResultSerializer
@@ -15,7 +16,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         model = StudentProfile
         fields = (
             'id', 'user', 'email', 'prn_number', 'full_name', 'gender',
-            'date_of_birth', 'phone_number', 'batch_year', 'cgpa', 'percentage',
+            'date_of_birth', 'phone_number', 'personal_email', 'batch_year', 'cgpa', 'percentage',
             'profile_picture', 'created_at', 'updated_at'
         )
         read_only_fields = ('id', 'user', 'created_at', 'updated_at')
@@ -48,6 +49,11 @@ class ApplicationCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
         fields = ('internship', 'personal_email', 'submitted_cgpa', 'submitted_percentage', 'resume')
+        extra_kwargs = {
+            'personal_email': {'required': False, 'allow_blank': True},
+            'submitted_cgpa': {'required': False},
+            'submitted_percentage': {'required': False},
+        }
 
     def validate(self, attrs):
         student = self.context['request'].user.student_profile
@@ -55,6 +61,24 @@ class ApplicationCreateSerializer(serializers.ModelSerializer):
 
         if Application.objects.filter(student=student, internship=internship).exists():
             raise serializers.ValidationError('You have already applied for this internship')
+
+        if not internship.is_active:
+            raise serializers.ValidationError('This internship is no longer active.')
+
+        if internship.deadline < timezone.localdate():
+            raise serializers.ValidationError('The deadline for this internship has passed.')
+
+        # Internship-specific batch year constraints.
+        eligible_batch_years = internship.eligible_batch_years or []
+        if eligible_batch_years and student.batch_year not in eligible_batch_years:
+            raise serializers.ValidationError('Your batch year is not eligible for this internship.')
+
+        attrs.setdefault('personal_email', student.personal_email or student.user.email)
+        attrs.setdefault('submitted_cgpa', student.cgpa)
+        attrs.setdefault('submitted_percentage', student.percentage)
+
+        if not attrs.get('personal_email'):
+            raise serializers.ValidationError('Personal email is required. Please update your profile.')
 
         return attrs
 

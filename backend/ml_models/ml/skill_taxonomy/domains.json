@@ -1,57 +1,57 @@
 {
   "web_development": {
-    "required": ["frontend", "backend", "full stack", "full stack development", "web", "web development", "html", "css", "javascript"],
-    "bonus": ["react", "angular", "vue", "node", "django", "flask", "fastapi", "rest api", "graphql", "next.js", "bootstrap", "tailwind", "postman", "jwt", "oauth", "authentication", "vercel", "netlify", "render"],
-    "related_domains": ["backend", "mobile_development"]
+    "required": ["frontend", "backend", "full stack", "full stack development", "web", "web development", "html", "css", "javascript", "responsive design", "client side", "server side"],
+    "bonus": ["react", "angular", "vue", "svelte", "node.js", "express", "django", "flask", "fastapi", "rest api", "graphql", "next.js", "nuxt", "bootstrap", "tailwind", "material ui", "redux", "typescript", "postman", "jwt", "oauth", "authentication", "vercel", "netlify", "render", "websocket", "pwa", "seo"],
+    "related_domains": ["backend", "mobile_development", "ui_ux_design", "qa_testing"]
   },
   "data_science": {
-    "required": ["data", "analysis", "machine learning", "statistics", "python", "ml"],
-    "bonus": ["tensorflow", "pytorch", "pandas", "numpy", "sklearn", "deep learning", "nlp", "computer vision", "data cleaning", "feature engineering", "model evaluation", "jupyter", "seaborn", "matplotlib", "power bi", "tableau", "rag", "llms", "agentic ai", "sentiment analysis"],
-    "related_domains": ["ai_ml", "backend"]
+    "required": ["data", "analysis", "machine learning", "statistics", "python", "ml", "data science", "predictive modeling"],
+    "bonus": ["tensorflow", "pytorch", "pandas", "numpy", "sklearn", "scikit-learn", "xgboost", "lightgbm", "random forest", "logistic regression", "linear regression", "deep learning", "nlp", "computer vision", "data cleaning", "feature engineering", "model evaluation", "cross validation", "a/b testing", "jupyter", "seaborn", "matplotlib", "power bi", "tableau", "rag", "llms", "agentic ai", "sentiment analysis", "streamlit", "hugging face", "transformers", "churn prediction", "classification", "regression", "time series", "forecasting", "feature selection", "model deployment", "mlflow"],
+    "related_domains": ["ai_ml", "backend", "data_analytics", "cloud_devops"]
   },
   "mobile_development": {
-    "required": ["mobile", "android", "ios", "app"],
-    "bonus": ["kotlin", "swift", "flutter", "react native", "android development"],
-    "related_domains": ["web_development"]
+    "required": ["mobile", "android", "ios", "app", "mobile application"],
+    "bonus": ["kotlin", "swift", "flutter", "react native", "android development", "ios development", "jetpack compose", "swiftui", "xcode", "firebase", "mobile ui", "play store", "app store", "dart", "realm", "retrofit"],
+    "related_domains": ["web_development", "backend", "ui_ux_design", "qa_testing"]
   },
   "backend": {
-    "required": ["backend", "server", "api", "database"],
-    "bonus": ["java", "python", "node", "spring", "spring boot", "django", "flask", "fastapi", "rest api", "jwt", "oauth", "microservices", "sql", "postgresql", "mysql", "mongodb", "redis", "kafka", "hibernate", "maven"],
-    "related_domains": ["web_development", "cloud_devops"]
+    "required": ["backend", "server", "api", "database", "system design"],
+    "bonus": ["java", "python", "node.js", "golang", "c#", "spring", "spring boot", "django", "flask", "fastapi", "express", "rest api", "graphql", "jwt", "oauth", "microservices", "sql", "postgresql", "mysql", "mongodb", "redis", "kafka", "rabbitmq", "hibernate", "maven", "orm", "grpc", "websocket", "scalability", "caching", "api gateway", "rate limiting"],
+    "related_domains": ["web_development", "cloud_devops", "qa_testing", "mobile_development"]
   },
   "ai_ml": {
-    "required": ["ai", "artificial intelligence", "machine learning", "deep learning", "ml"],
-    "bonus": ["neural network", "nlp", "computer vision", "tensorflow", "pytorch", "opencv", "transformers", "rag", "llms", "agentic ai", "object detection", "classification", "recommendation system", "chatbot"],
-    "related_domains": ["data_science"]
+    "required": ["ai", "artificial intelligence", "machine learning", "deep learning", "ml", "model training"],
+    "bonus": ["neural network", "nlp", "computer vision", "tensorflow", "pytorch", "keras", "opencv", "transformers", "rag", "llms", "agentic ai", "object detection", "classification", "recommendation system", "chatbot", "fine tuning", "prompt engineering", "vector database", "langchain", "llamaindex", "evaluation", "inference", "model optimization", "mlops"],
+    "related_domains": ["data_science", "cloud_devops", "backend", "data_analytics"]
   },
   "cloud_devops": {
-    "required": ["cloud", "devops", "aws", "azure", "gcp", "docker", "kubernetes"],
-    "bonus": ["ci/cd", "jenkins", "terraform", "ansible", "linux", "github actions", "gitlab ci", "docker compose", "aws ec2", "aws s3", "azure fundamentals", "google cloud", "oracle cloud", "aws certified cloud practitioner", "aws certified solutions architect", "microsoft azure fundamentals"],
-    "related_domains": ["backend"]
+    "required": ["cloud", "devops", "aws", "azure", "gcp", "docker", "kubernetes", "infrastructure"],
+    "bonus": ["ci/cd", "jenkins", "terraform", "ansible", "linux", "shell scripting", "github actions", "gitlab ci", "docker compose", "aws ec2", "aws s3", "azure fundamentals", "google cloud", "oracle cloud", "helm", "prometheus", "grafana", "nginx", "load balancer", "autoscaling", "iac", "sre", "site reliability", "aws certified cloud practitioner", "aws certified solutions architect", "microsoft azure fundamentals"],
+    "related_domains": ["backend", "qa_testing", "ai_ml", "data_science"]
   },
   "project_management": {
-    "required": ["project management", "agile", "scrum", "management", "leadership"],
-    "bonus": ["stakeholder management", "teamwork", "planning", "coordination", "sprint management", "jira", "confluence", "project documentation"],
-    "related_domains": []
+    "required": ["project management", "agile", "scrum", "management", "leadership", "delivery"],
+    "bonus": ["stakeholder management", "teamwork", "planning", "coordination", "sprint management", "jira", "confluence", "project documentation", "risk management", "resource planning", "roadmap", "milestones", "kanban", "communication", "status reporting", "change management"],
+    "related_domains": ["business_analyst", "data_analytics", "qa_testing"]
   },
   "data_analytics": {
-    "required": ["data analysis", "reporting", "dashboards", "sql"],
-    "bonus": ["power bi", "tableau", "excel", "data visualization", "kpi", "business intelligence", "google data analytics certificate", "ibm data science professional certificate"],
-    "related_domains": ["data_science"]
+    "required": ["data analysis", "reporting", "dashboards", "sql", "analytics"],
+    "bonus": ["power bi", "tableau", "excel", "data visualization", "kpi", "business intelligence", "etl", "data modeling", "dashboard design", "insights", "cohort analysis", "funnel analysis", "google analytics", "looker", "metabase", "google data analytics certificate", "ibm data science professional certificate"],
+    "related_domains": ["data_science", "business_analyst", "project_management"]
   },
   "business_analyst": {
-    "required": ["business analysis", "requirements gathering", "process mapping"],
-    "bonus": ["stakeholder management", "user stories", "jira", "confluence", "excel", "power bi", "documentation"],
-    "related_domains": ["project_management", "data_analytics"]
+    "required": ["business analysis", "requirements gathering", "process mapping", "business requirements"],
+    "bonus": ["stakeholder management", "user stories", "jira", "confluence", "excel", "power bi", "documentation", "brd", "frd", "gap analysis", "acceptance criteria", "wireframing", "uml", "bpmn", "use cases", "functional specification"],
+    "related_domains": ["project_management", "data_analytics", "ui_ux_design", "qa_testing"]
   },
   "ui_ux_design": {
-    "required": ["ui", "ux", "user research", "wireframes", "prototyping"],
-    "bonus": ["figma", "adobe xd", "user flows", "design system", "usability testing"],
-    "related_domains": ["web_development"]
+    "required": ["ui", "ux", "user research", "wireframes", "prototyping", "interaction design"],
+    "bonus": ["figma", "adobe xd", "sketch", "user flows", "design system", "usability testing", "information architecture", "accessibility", "heuristic evaluation", "persona", "journey mapping", "high fidelity", "low fidelity", "responsive design", "design tokens"],
+    "related_domains": ["web_development", "mobile_development", "business_analyst"]
   },
   "qa_testing": {
-    "required": ["testing", "qa", "test cases", "bug tracking"],
-    "bonus": ["manual testing", "automation testing", "selenium", "postman", "jira"],
-    "related_domains": ["web_development", "backend"]
+    "required": ["testing", "qa", "test cases", "bug tracking", "quality assurance"],
+    "bonus": ["manual testing", "automation testing", "selenium", "cypress", "playwright", "postman", "jira", "test plan", "test strategy", "regression testing", "unit testing", "integration testing", "api testing", "performance testing", "load testing", "jmeter", "pytest", "testng", "defect lifecycle"],
+    "related_domains": ["web_development", "backend", "mobile_development", "cloud_devops", "business_analyst"]
   }
 }

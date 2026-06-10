@@ -26,6 +26,7 @@ class StudentProfileView(generics.RetrieveUpdateAPIView):
                 'gender': 'other',
                 'date_of_birth': '2000-01-01',
                 'phone_number': '+910000000000',
+                'personal_email': self.request.user.email,
                 'batch_year': 2025,
                 'cgpa': 0.0,
                 'percentage': 0.0

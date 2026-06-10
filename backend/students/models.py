@@ -22,6 +22,7 @@ class StudentProfile(models.Model):
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     date_of_birth = models.DateField()
     phone_number = models.CharField(max_length=15)
+    personal_email = models.EmailField(blank=True, default='', verbose_name='Personal Email')
     batch_year = models.IntegerField(help_text='Year of graduation')
     cgpa = models.DecimalField(max_digits=4, decimal_places=2, validators=[MinValueValidator(0), MaxValueValidator(10)])
     percentage = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(0), MaxValueValidator(100)])

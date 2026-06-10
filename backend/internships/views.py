@@ -4,6 +4,8 @@ Internship views
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from accounts.permissions import IsTeacher
+from django.db.models import Q
+from django.utils import timezone
 from .models import Internship
 from .serializers import InternshipSerializer
 
@@ -22,8 +24,12 @@ class InternshipListView(generics.ListCreateAPIView):
     def get_queryset(self):
         qs = Internship.objects.all()
         is_active = self.request.query_params.get('is_active')
+        today = timezone.localdate()
         if is_active is not None:
-            return qs.filter(is_active=is_active.lower() == 'true')
+            flag = is_active.lower() == 'true'
+            if flag:
+                return qs.filter(is_active=True, deadline__gte=today)
+            return qs.filter(Q(is_active=False) | Q(deadline__lt=today))
         return qs
 
     def perform_create(self, serializer):
