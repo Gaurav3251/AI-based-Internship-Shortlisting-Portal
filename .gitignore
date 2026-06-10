@@ -34,6 +34,8 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 /media
+# User-uploaded resumes (uploaded at runtime; should never be committed)
+backend/media/resumes/
 /staticfiles
 /static
 

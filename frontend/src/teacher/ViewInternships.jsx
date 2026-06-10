@@ -44,7 +44,7 @@ const ViewInternships = () => {
                 <td>{it.company_name}</td>
                 <td>{it.internship_role}</td>
                 <td>{it.deadline}</td>
-                <td>{it.is_active ? 'Active' : 'Closed'}</td>
+                <td>{it.is_open ? 'Active' : 'Closed'}</td>
                 <td className="d-flex flex-wrap gap-2">
                   <Link className="btn btn-sm btn-outline-primary" to={`/teacher/shortlisted/${it.id}`}>Shortlisted</Link>
                   <Link className="btn btn-sm btn-outline-secondary" to={`/teacher/internships/${it.id}/edit`}>Edit</Link>

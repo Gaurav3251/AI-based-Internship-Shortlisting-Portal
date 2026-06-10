@@ -20,6 +20,15 @@ const ApplyInternship = () => {
     getInternship(internshipId).then(setInternship);
   }, [internshipId]);
 
+  useEffect(() => {
+    if (!profile) return;
+    setForm({
+      personal_email: profile.personal_email || profile.email || '',
+      submitted_cgpa: profile.cgpa || '',
+      submitted_percentage: profile.percentage || '',
+    });
+  }, [profile]);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -32,9 +41,9 @@ const ApplyInternship = () => {
 
     const data = new FormData();
     data.append('internship', internshipId);
-    data.append('personal_email', form.personal_email);
-    data.append('submitted_cgpa', form.submitted_cgpa);
-    data.append('submitted_percentage', form.submitted_percentage);
+    if (form.personal_email) data.append('personal_email', form.personal_email);
+    if (form.submitted_cgpa !== '') data.append('submitted_cgpa', form.submitted_cgpa);
+    if (form.submitted_percentage !== '') data.append('submitted_percentage', form.submitted_percentage);
     data.append('resume', resume);
 
     setLoading(true);

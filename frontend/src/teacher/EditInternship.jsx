@@ -24,7 +24,8 @@ const EditInternship = () => {
         duration: data.duration || '',
         ppo_conversion: !!data.ppo_conversion,
         deadline: data.deadline || '',
-        is_active: data.is_active ?? true
+        is_active: data.is_active ?? true,
+        eligible_batch_years_csv: (data.eligible_batch_years || []).join(', ')
       }))
       .catch(() => setError('Failed to load internship.'));
   }, [internshipId]);
@@ -39,7 +40,17 @@ const EditInternship = () => {
     setError('');
     setMessage('');
     try {
-      await updateInternship(internshipId, form);
+      const eligible_batch_years = form.eligible_batch_years_csv
+        .split(',')
+        .map((v) => Number(v.trim()))
+        .filter((v) => Number.isInteger(v) && v > 2000);
+      const payload = {
+        ...form,
+        eligible_batch_years,
+        eligible_departments: ['CSE AIML']
+      };
+      delete payload.eligible_batch_years_csv;
+      await updateInternship(internshipId, payload);
       setMessage('Internship updated.');
       setTimeout(() => navigate('/teacher/internships'), 600);
     } catch {
@@ -100,6 +111,22 @@ const EditInternship = () => {
           <div className="col-md-4 mb-3">
             <label className="form-label">Deadline</label>
             <input type="date" name="deadline" className="form-control" value={form.deadline} onChange={onChange} required />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Eligible Batch Years (comma-separated)</label>
+            <input
+              name="eligible_batch_years_csv"
+              className="form-control"
+              placeholder="e.g. 2026, 2027"
+              value={form.eligible_batch_years_csv}
+              onChange={onChange}
+            />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Eligible Department</label>
+            <input className="form-control" value="CSE AIML" readOnly />
           </div>
         </div>
         <div className="form-check mb-3">

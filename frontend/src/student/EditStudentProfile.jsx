@@ -56,6 +56,10 @@ const EditStudentProfile = () => {
             <input name="phone_number" className="form-control" value={form.phone_number || ''} onChange={onChange} />
           </div>
           <div className="col-md-4 mb-3">
+            <label className="form-label">Personal Email</label>
+            <input type="email" name="personal_email" className="form-control" value={form.personal_email || ''} onChange={onChange} />
+          </div>
+          <div className="col-md-4 mb-3">
             <label className="form-label">Batch Year</label>
             <input name="batch_year" className="form-control" value={form.batch_year || ''} onChange={onChange} />
           </div>

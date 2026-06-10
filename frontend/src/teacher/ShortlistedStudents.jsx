@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { shortlistedStudents, exportShortlisted, updateApplicationStatus } from '../api/teacher.api';
+import { rankedStudents, exportShortlisted, updateApplicationStatus } from '../api/teacher.api';
 import Loader from '../components/Loader.jsx';
 import StatusBadge from '../components/StatusBadge.jsx';
+import { API_BASE } from '../utils/constants';
 
 const ShortlistedStudents = () => {
   const { internshipId } = useParams();
   const [items, setItems] = useState(null);
+  const [topN, setTopN] = useState(20);
   const [exporting, setExporting] = useState(false);
   const [error, setError] = useState('');
+  const backendOrigin = API_BASE.replace(/\/api\/?$/, '');
+
+  const toBackendUrl = (pathOrUrl) => {
+    if (!pathOrUrl) return '';
+    if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
+    return `${backendOrigin}${pathOrUrl.startsWith('/') ? '' : '/'}${pathOrUrl}`;
+  };
 
   useEffect(() => {
-    shortlistedStudents(internshipId).then(setItems);
-  }, [internshipId]);
+    rankedStudents(internshipId, topN).then((res) => setItems(res.results || []));
+  }, [internshipId, topN]);
 
   const onExport = async () => {
     setError('');
@@ -58,30 +67,55 @@ const ShortlistedStudents = () => {
         )}
       </div>
       {error && <div className="alert alert-danger">{error}</div>}
-      <div className="alert alert-warning">
-        AI-assisted shortlist. Faculty review required before final decisions.
+      <div className="alert alert-warning">AI-assisted ranking with Top-N recommendation. Faculty override remains final.</div>
+      <div className="row g-2 mb-3">
+        <div className="col-sm-4 col-md-3">
+          <label className="form-label mb-1">Top-N policy</label>
+          <input
+            type="number"
+            className="form-control"
+            min="1"
+            max="500"
+            value={topN}
+            onChange={(e) => setTopN(Number(e.target.value || 20))}
+          />
+        </div>
       </div>
       <div className="table-responsive">
         <table className="table table-hover">
           <thead>
             <tr>
+              <th>Rank</th>
               <th>Name</th>
               <th>PRN</th>
               <th>CGPA</th>
               <th>Status</th>
               <th>Score</th>
+              <th>Top-N</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {items.map((app) => (
               <tr key={app.id}>
+                <td>#{app.rank || '—'}</td>
                 <td>{app.student_name || app.student?.full_name}</td>
                 <td>{app.student?.prn_number}</td>
                 <td>{app.submitted_cgpa}</td>
                 <td><StatusBadge status={app.status} /></td>
                 <td>{app.shortlisting_result?.overall_score ?? 'N/A'}</td>
+                <td>{app.top_n_policy_recommended ? 'Yes' : 'No'}</td>
                 <td className="d-flex flex-wrap gap-2">
+                  {app.resume && (
+                    <a
+                      className="btn btn-sm btn-outline-primary"
+                      href={toBackendUrl(app.resume)}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View Resume
+                    </a>
+                  )}
                   {app.status === 'under_review' && (
                     <>
                       <button

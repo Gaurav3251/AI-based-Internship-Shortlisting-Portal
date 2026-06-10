@@ -24,6 +24,9 @@ const StudentProfile = () => {
       <div className="row profile-grid">
         <div className="col-md-6"><strong>Name:</strong> {profile.full_name}</div>
         <div className="col-md-6"><strong>PRN:</strong> {profile.prn_number}</div>
+        <div className="col-md-6"><strong>Personal Email:</strong> {profile.personal_email || '-'}</div>
+        <div className="col-md-6"><strong>Phone:</strong> {profile.phone_number}</div>
+        <div className="col-md-6"><strong>Batch Year:</strong> {profile.batch_year}</div>
         <div className="col-md-6"><strong>CGPA:</strong> {profile.cgpa}</div>
         <div className="col-md-6"><strong>Percentage:</strong> {profile.percentage}</div>
       </div>

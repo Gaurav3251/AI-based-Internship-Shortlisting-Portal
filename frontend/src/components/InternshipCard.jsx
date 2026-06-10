@@ -22,8 +22,12 @@ const InternshipCard = ({ item, applied }) => (
       <div className="jd-box jd-pre">{item.description || 'No description provided.'}</div>
     </div>
     <div className="mt-3">
-      <Link className={`btn ${applied ? 'btn-secondary' : 'btn-outline-primary'}`} to={applied ? '#' : `/student/apply/${item.id}`} onClick={(e) => applied && e.preventDefault()}>
-        {applied ? 'Already Applied' : 'Apply'}
+      <Link
+        className={`btn ${applied || !item.is_open ? 'btn-secondary' : 'btn-outline-primary'}`}
+        to={applied || !item.is_open ? '#' : `/student/apply/${item.id}`}
+        onClick={(e) => (applied || !item.is_open) && e.preventDefault()}
+      >
+        {applied ? 'Already Applied' : (item.is_open ? 'Apply' : 'Closed')}
       </Link>
     </div>
   </div>

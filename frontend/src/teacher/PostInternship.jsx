@@ -12,7 +12,8 @@ const PostInternship = () => {
     location: '',
     duration: '',
     ppo_conversion: false,
-    deadline: ''
+    deadline: '',
+    eligible_batch_years_csv: ''
   });
   const [message, setMessage] = useState('');
 
@@ -23,7 +24,17 @@ const PostInternship = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await postInternship(form);
+    const eligible_batch_years = form.eligible_batch_years_csv
+      .split(',')
+      .map((v) => Number(v.trim()))
+      .filter((v) => Number.isInteger(v) && v > 2000);
+    const payload = {
+      ...form,
+      eligible_batch_years,
+      eligible_departments: ['CSE AIML']
+    };
+    delete payload.eligible_batch_years_csv;
+    await postInternship(payload);
     setMessage('Internship posted.');
   };
 
@@ -77,6 +88,22 @@ const PostInternship = () => {
           <div className="col-md-4 mb-3">
             <label className="form-label">Deadline</label>
             <input type="date" name="deadline" className="form-control" value={form.deadline} onChange={onChange} required />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Eligible Batch Years (comma-separated)</label>
+            <input
+              name="eligible_batch_years_csv"
+              className="form-control"
+              placeholder="e.g. 2026, 2027"
+              value={form.eligible_batch_years_csv}
+              onChange={onChange}
+            />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Eligible Department</label>
+            <input className="form-control" value="CSE AIML" readOnly />
           </div>
         </div>
         <div className="form-check mb-3">
